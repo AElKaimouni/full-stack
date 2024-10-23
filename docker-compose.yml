@@ -1,0 +1,47 @@
+
+version: '3.8'
+
+services:
+  # Bakend Service
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - db  # Wait for the db service (MariaDB) to be ready
+#    networks:
+#      - app-network
+
+#  # React app service
+#  react-app:
+#    build:
+#      context: src/main/webapp/reactjs
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3000:80"  # Exposing the app on port 3000
+
+  # MariaDB service
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: root  # Replace with your secure root password
+      MARIADB_DATABASE: springboot          # Replace with your database name
+      MARIADB_USER: root                    # Replace with your database user
+      MARIADB_PASSWORD: root       # Replace with your user's password
+    ports:
+      - "3305:3306"  # Exposing the default MariaDB port
+    volumes:
+      - db-data:/var/lib/mysql  # Persisting database data
+    networks:
+      - app-network
+
+# Define a shared network for the services
+networks:
+  app-network:
+
+# Persist database data using a volume
+volumes:
+  db-data:
